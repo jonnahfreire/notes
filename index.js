@@ -29,9 +29,6 @@ $('.new-note-container').querySelector('.save')
     getAllNotes();
 });
 
-function doubleClick(note) {
-    return;
-}
 
 $('.edit-note-container').querySelector('.close-edit')
     .addEventListener('click', () => $('.edit-note-container').classList.remove('edit-note-container-show'));
