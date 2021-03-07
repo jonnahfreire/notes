@@ -3,22 +3,13 @@ const $$ = (element) => document.querySelectorAll(element);
 
 const notes = JSON.parse(localStorage.getItem('notes'))||[];
 let currentNoteIid = 0;
+let closeModalConf = false;
+let closeModalIsClosed = true;
+let isEditting = false;
 
 const setNewNote = () => localStorage.setItem('notes', JSON.stringify(notes));
 
-$('.new-note-container').querySelector('.close')
-    .addEventListener('click', () => {
-        $('.new-note-container').classList.remove('new-note-container-show');
-    });
-
-$('.new-note-btn .btn-new').addEventListener('click', () => {    
-    $('.new-note-container').classList.add('new-note-container-show');
-    $('.new-note-container').querySelector('.input-title').value="";
-    $('.new-note-container').querySelector('.nt-area').value="";
-});    
-
-$('.new-note-container').querySelector('.save')
-.addEventListener('click', () => {
+const saveNote = () => {
     let title = $('.new-note-container .input-title').value || "Sem título";
     let text = $('.new-note-container .nt-area').value || "";
     
@@ -27,11 +18,68 @@ $('.new-note-container').querySelector('.save')
 
     setNewNote();
     getAllNotes();
+}
+
+$('.close-confirmation').querySelector('.close-conf-btn #y')
+.addEventListener('click', ()=> {
+    closeModalConf = true;
+    $('.close-confirmation-modal').classList.remove('show-close-conf-modal');
+    closeModalIsClosed = true;
+    
+    if(!isEditting) saveNote();
+    else saveEdited();
+})
+
+$('.close-confirmation').querySelector('.close-conf-btn #n')
+.addEventListener('click', ()=> {
+    closeModalConf = false;
+    $('.close-confirmation-modal').classList.remove('show-close-conf-modal');
+    
+    if(!isEditting) $('.new-note-container').classList.remove('new-note-container-show');
+    else $('.edit-note-container').classList.remove('edit-note-container-show');
+})
+
+
+$('.new-note-container').querySelector('.close')
+    .addEventListener('click', () => {
+        let title = $('.new-note-container').querySelector('.input-title').value;
+        let text = $('.new-note-container').querySelector('.nt-area').value;
+        if(title || text){
+            $('.close-confirmation-modal').classList.add('show-close-conf-modal')
+           
+        }else{
+            $('.new-note-container').classList.remove('new-note-container-show');
+        }
+        return;
+    });
+
+$('.new-note-btn').addEventListener('click', () => {    
+    $('.new-note-container').classList.add('new-note-container-show');
+    $('.new-note-container').querySelector('.input-title').value="";
+    $('.new-note-container').querySelector('.nt-area').value="";
+});    
+
+
+$('.new-note-container').querySelector('.save')
+.addEventListener('click', () => {
+    saveNote();
 });
 
 
 $('.edit-note-container').querySelector('.close-edit')
-    .addEventListener('click', () => $('.edit-note-container').classList.remove('edit-note-container-show'));
+    .addEventListener('click', () => {
+        isEditting = true;
+        let title = $('.edit-note-container').querySelector('.input-title').value;
+        let text = $('.edit-note-container').querySelector('.nt-area').value;
+        
+        if(title || text){
+            $('.close-confirmation-modal').classList.add('show-close-conf-modal')
+           
+        }else{
+            $('.edit-note-container').classList.remove('edit-note-container-show');
+        }
+        return;
+});
 
 
 function editNote(id) {
@@ -43,17 +91,19 @@ function editNote(id) {
     editContainer.classList.add('edit-note-container-show');
 }
 
-$('.edit-note-container').querySelector('.save-edit')
-    .addEventListener('click', () => {
-        const title = $('.edit-note-container').querySelector('.input-title').value || "Sem título";
-        const text = $('.edit-note-container').querySelector('.nt-area').value || "";
-        
-        notes[currentNoteIid] = { "title": title, "note": text };
+const saveEdited = () => {
+    const title = $('.edit-note-container').querySelector('.input-title').value || "Sem título";
+    const text = $('.edit-note-container').querySelector('.nt-area').value || "";
+    
+    notes[currentNoteIid] = { "title": title, "note": text };
 
-        localStorage.setItem('notes', JSON.stringify(notes));
-        $('.edit-note-container').classList.remove('edit-note-container-show');
-        getAllNotes();
-});
+    localStorage.setItem('notes', JSON.stringify(notes));
+    $('.edit-note-container').classList.remove('edit-note-container-show');
+    getAllNotes();
+}
+
+$('.edit-note-container').querySelector('.save-edit')
+    .addEventListener('click', () => saveEdited());
 
 
 const deleteNote = (target) => {
