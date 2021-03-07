@@ -2,35 +2,51 @@ const $ = (element) => document.querySelector(element);
 const $$ = (element) => document.querySelectorAll(element);
 
 const notes = JSON.parse(localStorage.getItem('notes'))||[];
-let currentNoteIid = 0;
-let closeModalConf = false;
-let closeModalIsClosed = true;
-let isEditting = false;
+var currentNoteIid = 0;
+var closeModalConf = false;
+var excludeModal = false;
+var isEditting = false;
+var excludeTarget = 0;
+var currentEditColor = '';
 
 const setNewNote = () => localStorage.setItem('notes', JSON.stringify(notes));
+
+const time = () => {
+    const months = ['Jan','Fev','Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+    let date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth();
+    let hours = date.getHours()
+    let minutes = date.getMinutes();
+
+    minutes = minutes.toString().length == 1 ? `0${minutes}`: minutes;
+    date = `${day} ${months[month]} ${hours}:${minutes}`
+    return date;
+}
 
 const saveNote = () => {
     let title = $('.new-note-container .input-title').value || "Sem título";
     let text = $('.new-note-container .nt-area').value || "";
     
-    notes.push({ "title": title, "note": text });
+    isEditting && notes.unshift({ "cardcolor": currentEditColor, "date": time(), "title": title, "note": text });
+    !isEditting && notes.unshift({ "cardcolor": 'rgb(40, 138, 11);', "date": time(), "title": title, "note": text });
+
     $('.new-note-container').classList.remove('new-note-container-show');
 
     setNewNote();
     getAllNotes();
 }
 
-$('.close-confirmation').querySelector('.close-conf-btn #y')
+$('.close-confirmation .close-conf-btn #y')
 .addEventListener('click', ()=> {
     closeModalConf = true;
     $('.close-confirmation-modal').classList.remove('show-close-conf-modal');
-    closeModalIsClosed = true;
     
     if(!isEditting) saveNote();
     else saveEdited();
 })
 
-$('.close-confirmation').querySelector('.close-conf-btn #n')
+$('.close-confirmation .close-conf-btn #n')
 .addEventListener('click', ()=> {
     closeModalConf = false;
     $('.close-confirmation-modal').classList.remove('show-close-conf-modal');
@@ -39,14 +55,25 @@ $('.close-confirmation').querySelector('.close-conf-btn #n')
     else $('.edit-note-container').classList.remove('edit-note-container-show');
 })
 
+$('.exclude-confirmation .exclude-conf-btn #exclude')
+.addEventListener('click', ()=> {
+    excludeModal = true;
+    deleteNote(excludeTarget)
+    $('.exclude-confirmation-modal').classList.remove('show-exclude-conf-modal');
+})
 
-$('.new-note-container').querySelector('.close')
+$('.exclude-confirmation .exclude-conf-btn #donot-exclude')
+.addEventListener('click', ()=> {
+    excludeModal = false;
+    $('.exclude-confirmation-modal').classList.remove('show-exclude-conf-modal');
+})
+
+$('.new-note-container .close')
     .addEventListener('click', () => {
-        let title = $('.new-note-container').querySelector('.input-title').value;
-        let text = $('.new-note-container').querySelector('.nt-area').value;
+        let title = $('.new-note-container .input-title').value;
+        let text = $('.new-note-container .nt-area').value;
         if(title || text){
             $('.close-confirmation-modal').classList.add('show-close-conf-modal')
-           
         }else{
             $('.new-note-container').classList.remove('new-note-container-show');
         }
@@ -55,22 +82,22 @@ $('.new-note-container').querySelector('.close')
 
 $('.new-note-btn').addEventListener('click', () => {    
     $('.new-note-container').classList.add('new-note-container-show');
-    $('.new-note-container').querySelector('.input-title').value="";
-    $('.new-note-container').querySelector('.nt-area').value="";
+    $('.new-note-container .input-title').value="";
+    $('.new-note-container .nt-area').value="";
 });    
 
 
-$('.new-note-container').querySelector('.save')
+$('.new-note-container .fa-save')
 .addEventListener('click', () => {
     saveNote();
 });
 
 
-$('.edit-note-container').querySelector('.close-edit')
+$('.edit-note-container .close-edit')
     .addEventListener('click', () => {
         isEditting = true;
-        let title = $('.edit-note-container').querySelector('.input-title').value;
-        let text = $('.edit-note-container').querySelector('.nt-area').value;
+        let title = $('.edit-note-container .input-title').value;
+        let text = $('.edit-note-container .nt-area').value;
         
         if(title || text){
             $('.close-confirmation-modal').classList.add('show-close-conf-modal')
@@ -83,26 +110,41 @@ $('.edit-note-container').querySelector('.close-edit')
 
 
 function editNote(id) {
-    currentNoteIid = id;
     const note = notes[id];
-    const editContainer = $('.edit-note-container');
-    editContainer.querySelector('.input-title').value = note.title;
-    editContainer.querySelector('.nt-area').value = note.note;
-    editContainer.classList.add('edit-note-container-show');
+    currentNoteIid = id;
+    currentEditColor = note.cardcolor;
+    $('.edit-note-container .input-title').value = note.title;
+    $('.edit-note-container .nt-area').value = note.note;
+    $('.edit-note-container').classList.add('edit-note-container-show');
+}
+
+const setCardColor = (index, color) => {
+    let note = notes[index];
+    notes[index] = { 
+        "cardcolor": color,
+        "date": time(),
+        "title": note.title,
+        "note": note.note
+    };
+    setNewNote();
+    getAllNotes();
 }
 
 const saveEdited = () => {
-    const title = $('.edit-note-container').querySelector('.input-title').value || "Sem título";
-    const text = $('.edit-note-container').querySelector('.nt-area').value || "";
+    const title = $('.edit-note-container .input-title').value || "Sem título";
+    const text = $('.edit-note-container .nt-area').value || "";
     
-    notes[currentNoteIid] = { "title": title, "note": text };
+    const color = notes[currentNoteIid].cardcolor;
+    notes.splice(currentNoteIid, 1)
+    notes.unshift({ "cardcolor": color, "date": time(), "title": title, "note": text });
 
-    localStorage.setItem('notes', JSON.stringify(notes));
+    setNewNote();
     $('.edit-note-container').classList.remove('edit-note-container-show');
     getAllNotes();
 }
 
-$('.edit-note-container').querySelector('.save-edit')
+
+$('.edit-note-container .fa-save')
     .addEventListener('click', () => saveEdited());
 
 
@@ -120,12 +162,16 @@ const getAllNotes = () => {
    
     notes.forEach((note, index) => {
         const noteClone = $('.notes').cloneNode(true);
+        
+        noteClone.style.backgroundColor = note.cardcolor;
         noteClone.querySelector('.notes-title-text').textContent = note.title;
         noteClone.querySelector('.notes-text').textContent = note.note;
+        noteClone.querySelector('.edited span').textContent = time();
         
         noteClone.querySelector('.delete')
             .addEventListener('click', () => {
-                deleteNote(index);
+                $('.exclude-confirmation-modal').classList.add('show-exclude-conf-modal');
+                excludeTarget = index;
             });
 
         noteClone.querySelector('.edit')
@@ -133,8 +179,15 @@ const getAllNotes = () => {
                 editNote(index);
             });
 
-        noteClone.addEventListener('dblclick', () => {
+        noteClone.querySelector('.notes-preview')
+        .addEventListener('dblclick', () => {
             editNote(index);
+        });
+
+        noteClone.querySelector('.palette')
+        .addEventListener('input', ()=> {
+            let color = noteClone.querySelector('.palette').value;
+            setCardColor(index, color);
         });
         
         $('.notes-container').appendChild(noteClone);   
