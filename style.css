@@ -270,6 +270,56 @@ textarea::placeholder {
     -webkit-user-select: none;
 }
 
+.close-confirmation-modal {
+    background-color: transparent;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.close-confirmation {
+    background-color: rgb(114, 114, 114);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 290px;
+}
+
+.close-conf-text {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    -webkit-user-select: none;
+}
+
+.close-conf-btn {
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.close-conf-btn #y, #n{
+    color: #FFF;
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 2px;
+    background-color: rgb(248, 106, 81);
+    outline: none;
+    cursor: pointer;
+}
+
+.close-conf-btn #y {
+    background-color: rgb(40, 138, 11);
+    box-shadow: 0 0 5px #FFF;
+}
+
+.show-close-conf-modal {
+    display: flex;
+}
+
 
 @media screen and (max-width: 500px){
     .container { 
@@ -378,7 +428,7 @@ textarea::placeholder {
         align-items: center;
         justify-content: center;
         top: 5px;
-        right: -90%;
+        right: -89%;
         cursor: pointer;
     }
     
@@ -435,5 +485,196 @@ textarea::placeholder {
         align-items: center;
         font-size: 25px;
         color: #fff;
+    }
+    
+    .close-confirmation {
+        background-color: rgb(114, 114, 114);
+        padding: 10px;
+        width: 80%;
+        height: 15%;
+        border-radius: 10px;
+        margin-top: -20px;
+    }
+    
+    .close-conf-text {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: white;
+        -webkit-user-select: none;
+        text-align: center;
+        font-size: 1.3rem;
+    }
+    
+    .close-conf-btn {
+        position: relative;
+        top: 10px;
+        display: flex;
+        justify-content: space-around;
+    }
+    
+    .close-confirmation {
+        background-color: rgb(114, 114, 114);
+        padding: 20px;
+        border-radius: 10px;
+    }
+    
+    .close-conf-text {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: white;
+        -webkit-user-select: none;
+    }
+    
+    .close-conf-btn {
+        margin-top: 25px;
+        display: flex;
+        justify-content: space-around;
+    }
+    
+    .close-conf-btn #y, #n{
+        color: #FFF;
+        font-weight: bold;
+        font-size: 1rem;
+        padding: 0.6rem;
+        border: none;
+        border-radius: 2px;
+        background-color: rgb(248, 106, 81);
+        outline: none;
+        cursor: pointer;
+    }
+    
+    .close-conf-btn #y {
+        background-color: rgb(40, 138, 11);
+        box-shadow: 0 0 5px #FFF;
+    }
+}
+
+@media screen and (width: 360px){
+    .close-confirmation {
+        background-color: rgb(114, 114, 114);
+        padding: 10px;
+        width: 80%;
+        height: 20%;
+        border-radius: 10px;
+        margin-top: -20px;
+    }
+
+    .close-conf-btn {
+        position: relative;
+        top: 10px;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .close, .close-edit {
+        position: relative;
+        background-color:  rgb(107, 107, 107);
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 5px;
+        right: -88%;
+        cursor: pointer;
+    }
+
+    .close-conf-btn {
+        margin-top: 15px;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .close-conf-btn #y, #n{
+        color: #FFF;
+        font-weight: bold;
+        font-size: 1rem;
+        padding: 0.6rem;
+        border: none;
+        border-radius: 2px;
+        background-color: rgb(248, 106, 81);
+        outline: none;
+        cursor: pointer;
+    }
+     
+    .close-conf-btn #y {
+        background-color: rgb(40, 138, 11);
+        box-shadow: 0 0 5px #FFF;
+    }
+    
+    .create-new-btns, .edit-btns {
+        width: 100%;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media screen and (width: 320px){
+    .close, .close-edit {
+        position: relative;
+        background-color:  rgb(107, 107, 107);
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 5px;
+        right: -86%;
+        cursor: pointer;
+    }
+
+    .close-confirmation {
+        background-color: rgb(114, 114, 114);
+        padding: 10px;
+        width: 80%;
+        height: 20%;
+        border-radius: 10px;
+        margin-top: -20px;
+    }
+
+    .close-conf-btn {
+        position: relative;
+        top: -5px;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .close-conf-btn #y, #n{
+        color: #FFF;
+        font-weight: bold;
+        font-size: 1rem;
+        padding: 0.5rem;
+        border: none;
+        border-radius: 2px;
+        background-color: rgb(248, 106, 81);
+        outline: none;
+        cursor: pointer;
+    }
+     
+    .close-conf-btn #y {
+        background-color: rgb(40, 138, 11);
+        box-shadow: 0 0 5px #FFF;
+    }
+ 
+    .fa-save {
+        color: #fff;
+        font-size: 1.2rem;
+    }
+
+    .create-new-btns, .edit-btns {
+        width: 100%;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+ 
+    .save, .save-edit {
+        margin-left: 10px;
+        font-size: 1rem;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        -webkit-user-select: none;
     }
 }
