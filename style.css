@@ -395,8 +395,8 @@ label .c, label .e {
 label .fa-palette {
     position: absolute;
     color: #FFF;
-    font-size: 1.4rem;
-    margin-left: -10px;
+    font-size: 1rem;
+    margin-left: -8px;
     margin-top: -8px;
 }
 
@@ -656,13 +656,6 @@ label .fa-palette {
         display: flex;
     }
 
-    .fa-palette {
-        color: #FFF;
-        font-size: 1.3rem;
-        margin-right: 10px;
-        margin-top: 2px;
-    }
-
     /* Exclude modal */
     .exclude-confirmation-modal {
         background-color: transparent;
@@ -709,6 +702,14 @@ label .fa-palette {
         font-size: 1.3rem;
         text-align: center;
         -webkit-user-select: none;
+    }
+
+    label .fa-palette {
+        position: absolute;
+        color: #FFF;
+        font-size: 1.4rem;
+        margin-left: -6px;
+        margin-top: -8px;
     }
     
 }
@@ -779,13 +780,13 @@ label .fa-palette {
         display: flex;
     }
 
-    .fa-palette {
+    label .fa-palette {
+        position: absolute;
         color: #FFF;
-        font-size: 1.3rem;
-        margin-right: 10px;
-        margin-top: 2px;
+        font-size: 1.4rem;
+        margin-left: -10px;
+        margin-top: -8px;
     }
-
 }
 
 @media screen and (width: 320px){
