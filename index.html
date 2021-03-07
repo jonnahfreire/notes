@@ -34,7 +34,7 @@
                     <textarea name="note" class="nt-area" cols="30" rows="10" aria-valuetext="" placeholder="Clique para começar a digitar"></textarea>
                 </div>
                 <div class="create-new-btns">
-                    <i class="far fa-save"><span class="save">Salvar</span></i>
+                    <i class="far fa-save"></i>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
                     <textarea name="note" class="nt-area" cols="30" rows="10" aria-valuetext="" placeholder="Clique para começar a digitar"></textarea>
                 </div>
                 <div class="edit-btns">
-                    <i class="far fa-save"><span class="save-edit">Salvar</span></i>
+                    <i class="far fa-save"></i>
                 </div>
             </div>
         </div>
@@ -63,6 +63,16 @@
                 </div>
             </div>
         </div>
+        <div class="exclude-confirmation-modal">
+            <div class="exclude-confirmation">
+                <p class="exclude-conf-text">Deseja mesmo excluir?</p>
+                <div class="exclude-conf-btn">
+                    <button id="exclude">Sim</button>
+                    <button id="donot-exclude">Não</button>
+                </div>
+            </div>
+        </div>
+
     </div>
     <div class="models">
         <div class="notes">
@@ -73,6 +83,13 @@
                 <p class="notes-text"></p>
             </div>
             <div class="btns">
+                <div class="edited"><span></span></div>
+
+                <label for="plt">
+                    <i class="fas fa-palette"></i>
+                </label>
+                <input id="plt" class="palette" type="color">
+
                 <div class="edit">
                     <i class="far fa-edit"></i>
                 </div>
