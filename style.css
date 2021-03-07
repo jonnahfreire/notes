@@ -1,0 +1,439 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color:  rgb(41, 39, 39);
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: rgb(41, 39, 39);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    width: 100%;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(248, 112, 88);
+}
+
+.msg {
+    color: #fff;
+    margin-top: 280px;
+    letter-spacing: 2px;
+    width: inherit;
+    user-select: none;
+    display: block;
+}
+
+.hide-msg {
+    display: none;
+}
+
+.title p {
+    font-size: 35px;
+    color: #fffdff;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.notes-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 90%;
+    margin: 35px 0;
+}
+
+.notes {
+    background-color:  rgb(40, 138, 11);
+    width: 210px;
+    height: 125px;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 3px rgb(255, 255, 255);
+    cursor: pointer;
+}
+
+.models {
+    display: none;
+}
+
+.notes:hover {
+    box-shadow: 0px 0px 5px rgb(255, 255, 255);
+}
+
+.notes-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    -webkit-user-select: none;
+}
+
+.notes-title-text {
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-user-select: none;
+}
+
+.notes-preview {
+    padding: 2px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    -webkit-user-select: none;
+    overflow-y: hidden;
+    height: 40px;
+}
+
+.notes-text {
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btns {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    align-self: flex-end;
+    height: 30px;
+    position: relative;
+    top: 10px;
+}
+
+.edit, .delete {
+    cursor: pointer;
+    width: 30px;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    color: #fff;
+}
+
+.fa-edit:hover, .fa-trash-alt:hover {
+    font-size: 20px;
+    transition: .1s ease-in;
+}
+
+.new-note-btn {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    align-self: flex-end;
+    bottom: 25px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background-color: rgb(40, 138, 11);
+    box-shadow: 0px 0px 3px rgb(252, 251, 251);
+    cursor: pointer;
+}
+
+.new-note-btn:hover {
+    width: 45px;
+    height: 45px;
+    transition: .2s ease-in;
+    box-shadow: 0px 0px 5px rgb(255, 255, 255);
+}
+
+.fa-plus {
+    margin: 0 auto;
+    color: #fff;
+    font-size: 20px;
+}
+
+.new-note-container, .edit-note-container {
+    background: transparent;
+    width: 600px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 70px;
+    display: none;
+}
+
+.new-note-container-show, .edit-note-container-show {
+    display: flex;
+}
+
+.create-new, .edit-note {
+    width: inherit;
+    height: inherit;
+    background-color: rgb(82, 74, 82);
+    border-radius: 10px;
+}
+
+.create-title, .edit-title {
+    height: 45px;
+    background-color: thistle;
+    margin-bottom: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    justify-content: center;
+    margin-top: -34px;
+}
+
+.create-title input, .edit-title input {
+    height: 40px;
+    width: 80%;
+    font-size: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(85, 81, 81);
+    outline: none;
+    border: none;
+    background-color: thistle;
+    text-align: center;
+}
+
+input::placeholder {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    color: rgb(85, 81, 81);
+}
+
+.note-area, .note-area-edit {
+    width: 100%;
+}
+
+.note-area textarea, .note-area-edit textarea {
+    width: inherit;
+    height: 300px;
+    resize: none;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    color: #fff;
+    background-color: rgb(78, 74, 78);
+}
+
+textarea::placeholder {
+    text-align: center;
+    color: rgb(180, 180, 180);
+    font-size: 16px;
+}
+
+.create-new-btns, .edit-btns {
+    width: 100%;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.close, .close-edit {
+    position: relative;
+    background-color:  rgb(107, 107, 107);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 5px;
+    right: -560px;
+    cursor: pointer;
+}
+
+.fa-times {
+    color: rgb(228, 220, 220);;
+}
+
+.fa-save {
+    color: #fff;
+    font-size: 25px;
+}
+
+.save, .save-edit {
+    margin-left: 3px;
+    font-size: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-user-select: none;
+}
+
+
+@media screen and (max-width: 500px){
+    .container { 
+        width: 100%;
+        height: 100vh;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .notes-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 90%;
+        max-height: 80%;
+        margin: 10px 0;
+        overflow-y: scroll;
+    }
+    .notes-container::-webkit-scrollbar { width: 0;}
+
+    .notes-container .notes {
+        background-color:  rgb(70, 177, 37);
+        clear: both;
+        width: 100%;
+        height: 135px;
+        margin: 5px;
+        padding: 5px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 3px rgb(255, 255, 255);
+        cursor: pointer;
+    }    
+
+    .notes-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        -webkit-user-select: none;
+    }
+
+    .notes-title-text {
+        font-size: 1.5rem;
+    }
+    
+    .notes-preview {
+        padding: 5px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: white;
+        -webkit-user-select: none;
+        overflow-y: hidden;
+        height: 35px;
+    }
+    
+    .notes-text {
+        font-size: 1.4rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }  
+    
+    .note-area, .note-area-edit {
+        width: 100%;
+        height: 80%;
+    }
+    
+    .note-area textarea, .note-area-edit textarea {
+        width: inherit;
+        height: 98%;
+        resize: none;
+        border: none;
+        outline: none;
+        font-size: 18px;
+        color: #fff;
+        background-color: rgb(78, 74, 78);
+    }
+    
+    textarea::placeholder {
+        text-align: center;
+        color: rgb(219, 219, 219);
+        font-size: 16px;
+    }
+
+    .create-new,
+    .edit-note{
+        width: 100%;
+        height: 90%;
+        background-color: rgb(82, 74, 82);
+        border-radius: 10px;
+    }
+
+    .save, .save-edit {
+        margin-left: 10px;
+        font-size: 20px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        -webkit-user-select: none;
+    }
+
+    .close, .close-edit {
+        position: relative;
+        background-color:  rgb(107, 107, 107);
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 5px;
+        right: -90%;
+        cursor: pointer;
+    }
+    
+    .fa-times {
+        font-size: 25px;
+    }
+
+    .new-note-btn {
+        background-color: rgb(134, 201, 67);
+    }
+
+    .fa-plus {
+        margin: 0 auto;
+        color: #fff;
+        font-size: 25px;
+    }
+
+    .msg {
+        text-align: center;
+        font-size: 1.2rem;
+    }
+    
+    .new-note-container, .edit-note-container {
+        background: transparent;
+        width: 95%;
+        height: 80%;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        top: 70px;
+        display: none;
+    }
+    
+    .new-note-container-show, .edit-note-container-show {
+        display: flex;
+    }
+
+    .btns {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        align-self: flex-end;
+        height: 40px;
+        position: relative;
+        top: 5px;
+    }
+    
+    .edit, .delete {
+        cursor: pointer;
+        width: 40px;
+        height: inherit;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 25px;
+        color: #fff;
+    }
+}
