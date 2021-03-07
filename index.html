@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <title>Notes</title>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <p>Notes</p>
+        </div>
+        <div class="msg"><span>Clique no botão (+) para adicionar uma nota</span></div>
+        <div class="notes-container"></div>
+
+        <div class="new-note-btn">
+            <div class="btn-new">
+                <i class="fas fa-plus"></i>
+            </div>
+        </div>
+
+        <div class="new-note-container">
+            <div class="create-new">
+                <div class="close">
+                    <i class="fas fa-times"></i>
+                </div>
+                <div class="create-title">
+                    <input class="input-title" type="text" placeholder="Inserir um título..." value="" autofocus>
+                </div>
+                <div class="note-area">
+                    <textarea name="note" class="nt-area" cols="30" rows="10" aria-valuetext="" placeholder="Clique para começar a digitar"></textarea>
+                </div>
+                <div class="create-new-btns">
+                    <i class="far fa-save"><span class="save">Salvar</span></i>
+                </div>
+            </div>
+        </div>
+        <div class="edit-note-container">
+            <div class="edit-note">
+                <div class="close-edit">
+                    <i class="fas fa-times"></i>
+                </div>
+                <div class="edit-title">
+                    <input class="input-title" type="text" placeholder="Inserir um título..." value="" autofocus>
+                </div>
+                <div class="note-area-edit">
+                    <textarea name="note" class="nt-area" cols="30" rows="10" aria-valuetext="" placeholder="Clique para começar a digitar"></textarea>
+                </div>
+                <div class="edit-btns">
+                    <i class="far fa-save"><span class="save-edit">Salvar</span></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="models">
+        <div class="notes">
+            <div class="notes-title">
+                <p class="notes-title-text"></p>
+            </div>
+            <div class="notes-preview">
+                <p class="notes-text"></p>
+            </div>
+            <div class="btns">
+                <div class="edit">
+                    <i class="far fa-edit"></i>
+                </div>
+                <div class="delete">
+                    <i class="far fa-trash-alt"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<script src="index.js"></script>
+</body>
+</html>
