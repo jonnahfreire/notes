@@ -19,6 +19,7 @@ const time = () => {
     let hours = date.getHours()
     let minutes = date.getMinutes();
 
+    hours = hours.toString().length === 1 ? `0${hours}`: hours;
     minutes = minutes.toString().length == 1 ? `0${minutes}`: minutes;
     date = `${day} ${months[month]} ${hours}:${minutes}`
     return date;
@@ -26,10 +27,12 @@ const time = () => {
 
 const saveNote = () => {
     let title = $('.new-note-container .input-title').value || "Sem título";
-    let text = $('.new-note-container .nt-area').value || "";
-    
+    let text  = $('.new-note-container .nt-area').value || "";
+    let color = $('.new-note-container .c-palette').value || "";
+    color = color === '#000000' ? 'rgb(40, 138, 11);': color;
+
     isEditting && notes.unshift({ "cardcolor": currentEditColor, "date": time(), "title": title, "note": text });
-    !isEditting && notes.unshift({ "cardcolor": 'rgb(40, 138, 11);', "date": time(), "title": title, "note": text });
+    !isEditting && notes.unshift({ "cardcolor": color, "date": time(), "title": title, "note": text });
 
     $('.new-note-container').classList.remove('new-note-container-show');
 
@@ -166,7 +169,7 @@ const getAllNotes = () => {
         noteClone.style.backgroundColor = note.cardcolor;
         noteClone.querySelector('.notes-title-text').textContent = note.title;
         noteClone.querySelector('.notes-text').textContent = note.note;
-        noteClone.querySelector('.edited span').textContent = time();
+        noteClone.querySelector('.edited span').textContent = note.date;
         
         noteClone.querySelector('.delete')
             .addEventListener('click', () => {
