@@ -30,8 +30,8 @@ const saveNote = () => {
     let text  = $('.new-note-container .nt-area').value || "";
     let color = $('.new-note-container .c-palette').value || "";
     color = color === '#000000' ? 'rgb(40, 138, 11);': color;
-
-    isEditting && notes.unshift({ "cardcolor": currentEditColor, "date": time(), "title": title, "note": text });
+    console.log(color)
+    isEditting && notes.unshift({ "cardcolor": color === '#000000' ? colorcurrentEditColor: color, "date": time(), "title": title, "note": text });
     !isEditting && notes.unshift({ "cardcolor": color, "date": time(), "title": title, "note": text });
 
     $('.new-note-container').classList.remove('new-note-container-show');
@@ -95,29 +95,32 @@ $('.new-note-container .fa-save')
     saveNote();
 });
 
-
+let tempNote = {};
 $('.edit-note-container .close-edit')
     .addEventListener('click', () => {
         isEditting = true;
         let title = $('.edit-note-container .input-title').value;
         let text = $('.edit-note-container .nt-area').value;
         
-        if(title || text){
+        if(title !== tempNote.title || text !== tempNote.note){
             $('.close-confirmation-modal').classList.add('show-close-conf-modal')
-           
-        }else{
-            $('.edit-note-container').classList.remove('edit-note-container-show');
+            return;
         }
-        return;
+        $('.edit-note-container').classList.remove('edit-note-container-show');
+        
 });
 
 
 function editNote(id) {
     const note = notes[id];
+    tempNote = note;
     currentNoteIid = id;
     currentEditColor = note.cardcolor;
     $('.edit-note-container .input-title').value = note.title;
     $('.edit-note-container .nt-area').value = note.note;
+    $('.edit-note-container .edit-note').style.backgroundColor = currentEditColor;
+    $('.edit-note-container .nt-area').style.backgroundColor = currentEditColor;
+
     $('.edit-note-container').classList.add('edit-note-container-show');
 }
 
@@ -136,10 +139,12 @@ const setCardColor = (index, color) => {
 const saveEdited = () => {
     const title = $('.edit-note-container .input-title').value || "Sem título";
     const text = $('.edit-note-container .nt-area').value || "";
-    
+    let newColor = $('.edit-note-container .edit-palette').value;
     const color = notes[currentNoteIid].cardcolor;
+    newColor = newColor === color ? color : newColor;
+
     notes.splice(currentNoteIid, 1)
-    notes.unshift({ "cardcolor": color, "date": time(), "title": title, "note": text });
+    notes.unshift({ "cardcolor": newColor, "date": time(), "title": title, "note": text });
 
     setNewNote();
     $('.edit-note-container').classList.remove('edit-note-container-show');
