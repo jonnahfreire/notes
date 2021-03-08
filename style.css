@@ -239,18 +239,24 @@ textarea::placeholder {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.create-new-btns label .fa-palette,
+.edit-btns label .fa-palette {
+    background-color: #a746f7;
+    width: 65px;
+    color: #fff;
+    font-size: 25px;
+    text-align: center;
+    padding: 5px;
+    border-radius: 10px;
     cursor: pointer;
 }
 
-label .c, label .e {
-    margin-top: -2px;
-} 
-
 .c-palette, .edit-palette {
-    width: 35px;
-    height: inherit;
+    width: 55px;
     position: relative;
-    left: -15px;
+    left: -65px;
     opacity: 0;
     cursor: pointer;
 }
@@ -281,6 +287,7 @@ label .c, label .e {
     text-align: center;
     padding: 5px;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .save, .save-edit {
@@ -392,7 +399,7 @@ label .c, label .e {
     display: flex;
 }
 
-label .fa-palette {
+.btns label .fa-palette {
     position: absolute;
     color: #FFF;
     font-size: 1rem;
@@ -405,7 +412,6 @@ label .fa-palette {
     left: -15px;
     width: 20px;
     opacity: 0;
-    z-index: 999;
     cursor: pointer;
 }
 
@@ -704,12 +710,32 @@ label .fa-palette {
         -webkit-user-select: none;
     }
 
-    label .fa-palette {
+    .btns label .fa-palette {
         position: absolute;
         color: #FFF;
         font-size: 1.4rem;
         margin-left: -6px;
         margin-top: -8px;
+    }
+
+    .create-new-btns label .fa-palette,
+    .edit-btns label .fa-palette {
+        background-color: #a746f7;
+        width: 65px;
+        color: #fff;
+        font-size: 25px;
+        text-align: center;
+        padding: 5px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .c-palette, .edit-palette {
+        width: 55px;
+        position: relative;
+        left: -65px;
+        opacity: 0;
+        cursor: pointer;
     }
     
 }
