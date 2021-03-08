@@ -28,16 +28,22 @@ const time = () => {
 const saveNote = () => {
     let title = $('.new-note-container .input-title').value || "Sem título";
     let text  = $('.new-note-container .nt-area').value || "";
-    let color = $('.new-note-container .c-palette').value || "";
+    let color = $('.new-note-container .c-palette').value;
     color = color === '#000000' ? 'rgb(40, 138, 11);': color;
     
     isEditting && notes.unshift({
-        "cardcolor": color === '#000000' ? colorcurrentEditColor: color,
+        "cardcolor": color === '#000000' ? currentEditColor: color,
         "date": time(),
         "title": title,
         "note": text
     });
-    !isEditting && notes.unshift({ "cardcolor": color, "date": time(), "title": title, "note": text });
+    
+    !isEditting && notes.unshift({
+        "cardcolor": color,
+        "date": time(),
+        "title": title,
+        "note": text
+    });
 
     $('.new-note-container').classList.remove('new-note-container-show');
 
@@ -46,34 +52,34 @@ const saveNote = () => {
 }
 
 $('.close-confirmation .close-conf-btn #y')
-.addEventListener('click', ()=> {
-    closeModalConf = true;
-    $('.close-confirmation-modal').classList.remove('show-close-conf-modal');
-    
-    if(!isEditting) saveNote();
-    else saveEdited();
+    .addEventListener('click', ()=> {
+        closeModalConf = true;
+        $('.close-confirmation-modal').classList.remove('show-close-conf-modal');
+
+        if(!isEditting) saveNote();
+        else saveEdited();
 })
 
 $('.close-confirmation .close-conf-btn #n')
-.addEventListener('click', ()=> {
-    closeModalConf = false;
-    $('.close-confirmation-modal').classList.remove('show-close-conf-modal');
-    
-    if(!isEditting) $('.new-note-container').classList.remove('new-note-container-show');
-    else $('.edit-note-container').classList.remove('edit-note-container-show');
+    .addEventListener('click', ()=> {
+        closeModalConf = false;
+        $('.close-confirmation-modal').classList.remove('show-close-conf-modal');
+
+        if(!isEditting) $('.new-note-container').classList.remove('new-note-container-show');
+        else $('.edit-note-container').classList.remove('edit-note-container-show');
 })
 
 $('.exclude-confirmation .exclude-conf-btn #exclude')
-.addEventListener('click', ()=> {
-    excludeModal = true;
-    deleteNote(excludeTarget)
-    $('.exclude-confirmation-modal').classList.remove('show-exclude-conf-modal');
+    .addEventListener('click', ()=> {
+        excludeModal = true;
+        deleteNote(excludeTarget)
+        $('.exclude-confirmation-modal').classList.remove('show-exclude-conf-modal');
 })
 
 $('.exclude-confirmation .exclude-conf-btn #donot-exclude')
-.addEventListener('click', ()=> {
-    excludeModal = false;
-    $('.exclude-confirmation-modal').classList.remove('show-exclude-conf-modal');
+    .addEventListener('click', ()=> {
+        excludeModal = false;
+        $('.exclude-confirmation-modal').classList.remove('show-exclude-conf-modal');
 })
 
 $('.new-note-container .close')
@@ -96,8 +102,8 @@ $('.new-note-btn').addEventListener('click', () => {
 
 
 $('.new-note-container .fa-save')
-.addEventListener('click', () => {
-    saveNote();
+    .addEventListener('click', () => {
+        saveNote();
 });
 
 let tempNote = {};
@@ -111,8 +117,7 @@ $('.edit-note-container .close-edit')
             $('.close-confirmation-modal').classList.add('show-close-conf-modal')
             return;
         }
-        $('.edit-note-container').classList.remove('edit-note-container-show');
-        
+        $('.edit-note-container').classList.remove('edit-note-container-show');     
 });
 
 
@@ -143,6 +148,11 @@ const setCardColor = (index, color) => {
     getAllNotes();
 }
 
+
+$('.edit-note-container .fa-save')
+    .addEventListener('click', () => saveEdited());
+
+
 const saveEdited = () => {
     const title  = $('.edit-note-container .input-title').value || "Sem título";
     const text   = $('.edit-note-container .nt-area').value || "";
@@ -158,11 +168,6 @@ const saveEdited = () => {
     getAllNotes();
 }
 
-
-$('.edit-note-container .fa-save')
-    .addEventListener('click', () => saveEdited());
-
-
 const deleteNote = (target) => {
     notes.splice(target, 1);
     setNewNote();
@@ -170,7 +175,6 @@ const deleteNote = (target) => {
     notes.length === 0 && $('.msg').classList.remove('hide-msg');
     getAllNotes();
 }
-
 
 const getAllNotes = () => {
     $$('.notes-container .notes').forEach(item => item.remove());
