@@ -30,8 +30,13 @@ const saveNote = () => {
     let text  = $('.new-note-container .nt-area').value || "";
     let color = $('.new-note-container .c-palette').value || "";
     color = color === '#000000' ? 'rgb(40, 138, 11);': color;
-    console.log(color)
-    isEditting && notes.unshift({ "cardcolor": color === '#000000' ? colorcurrentEditColor: color, "date": time(), "title": title, "note": text });
+    
+    isEditting && notes.unshift({
+        "cardcolor": color === '#000000' ? colorcurrentEditColor: color,
+        "date": time(),
+        "title": title,
+        "note": text
+    });
     !isEditting && notes.unshift({ "cardcolor": color, "date": time(), "title": title, "note": text });
 
     $('.new-note-container').classList.remove('new-note-container-show');
@@ -114,15 +119,17 @@ $('.edit-note-container .close-edit')
 function editNote(id) {
     const note = notes[id];
     tempNote = note;
+    isEditting = true;
     currentNoteIid = id;
     currentEditColor = note.cardcolor;
     $('.edit-note-container .input-title').value = note.title;
     $('.edit-note-container .nt-area').value = note.note;
     $('.edit-note-container .edit-note').style.backgroundColor = currentEditColor;
     $('.edit-note-container .nt-area').style.backgroundColor = currentEditColor;
-
+    $('.edit-note-container .edit-palette').value = currentEditColor;
     $('.edit-note-container').classList.add('edit-note-container-show');
 }
+
 
 const setCardColor = (index, color) => {
     let note = notes[index];
@@ -137,12 +144,12 @@ const setCardColor = (index, color) => {
 }
 
 const saveEdited = () => {
-    const title = $('.edit-note-container .input-title').value || "Sem título";
-    const text = $('.edit-note-container .nt-area').value || "";
+    const title  = $('.edit-note-container .input-title').value || "Sem título";
+    const text   = $('.edit-note-container .nt-area').value || "";
     let newColor = $('.edit-note-container .edit-palette').value;
-    const color = notes[currentNoteIid].cardcolor;
-    newColor = newColor === color ? color : newColor;
-
+    
+    newColor = newColor === currentEditColor ? currentEditColor : newColor;
+   
     notes.splice(currentNoteIid, 1)
     notes.unshift({ "cardcolor": newColor, "date": time(), "title": title, "note": text });
 
