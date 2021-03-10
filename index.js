@@ -29,11 +29,12 @@ const time = () => {
 }
 
 const saveNote = () => {
-    let title = $('.new-note-container .input-title').value || "Sem título";
-    let text  = $('.new-note-container .nt-area').value || "";
+    let title = $('.new-note-container .input-title').value;
+    let text  = $('.new-note-container .nt-area').value;
     let color = $('.new-note-container .c-palette').value;
-    color = color === '#000000' ? '#288a0b;': color;
-
+    
+    color = color === '#000000' ? '#288a0b': color;
+    
     isEditting && notes.unshift({
         "cardcolor": color === '#000000' ? currentEditColor: color,
         "date": time(),
@@ -108,6 +109,7 @@ $('.new-note-container .fa-save')
     n = $('.new-note-container .nt-area').value;
     if(!t || t === "" || t === " "
     && !n || n === "" || n === " "){
+        alert("Impossível salvar notas vazias!")
         $('.new-note-container').classList.remove('new-note-container-show');
         return;
     }
@@ -146,12 +148,14 @@ function editNote(id) {
 
 const setCardColor = (index, color) => {
     let note = notes[index];
+   
     notes[index] = { 
         "cardcolor": color,
         "date": time(),
         "title": note.title,
         "note": note.note
     };
+   
     setNewNote(notes);
 }
 
@@ -209,7 +213,7 @@ const getAllNotes = () => {
         });
 
         noteClone.querySelector('.palette')
-        .addEventListener('input', (e)=> {
+        .addEventListener('input', e => {
             let color = e.target.value;
             setCardColor(index, color);
         });
