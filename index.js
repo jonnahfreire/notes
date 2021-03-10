@@ -32,7 +32,7 @@ const saveNote = () => {
     let title = $('.new-note-container .input-title').value;
     let text  = $('.new-note-container .nt-area').value;
     let color = $('.new-note-container .c-palette').value;
-    
+    title = title === " " ? "Sem título" : title;
     color = color === '#000000' ? '#288a0b': color;
     
     isEditting && notes.unshift({
@@ -96,24 +96,26 @@ $('.new-note-container .close')
         return;
     });
 
-$('.new-note-btn').addEventListener('click', () => {    
-    $('.new-note-container').classList.add('new-note-container-show');
-    $('.new-note-container .input-title').value="";
-    $('.new-note-container .nt-area').value="";
-});    
+const showAlert = (msg) => {
+    $('.alert-modal .alert span').textContent = "";
+    $('.alert-modal .alert button')
+    .addEventListener('click', ()=>{
+        $('.alert-modal').classList.remove('show-alert');
+    });
+
+    $('.alert-modal').classList.add('show-alert');
+    $('.alert-modal .alert span').textContent = msg;
+}
 
 
 $('.new-note-container .fa-save')
 .addEventListener('click', () => {
     t = $('.new-note-container .input-title').value;
     n = $('.new-note-container .nt-area').value;
-    if(!t || t === "" || t === " "
-    && !n || n === "" || n === " "){
-        alert("Impossível salvar notas vazias!")
-        $('.new-note-container').classList.remove('new-note-container-show');
-        return;
-    }
-    saveNote();
+    
+    !n ? showAlert("Impossível salvar notas vazias!")
+    :!t ? showAlert("Por favor insira um título")
+    :t && n && saveNote();
 });
 
 let tempNote = {};
@@ -184,6 +186,11 @@ const deleteNote = (target) => {
     setNewNote(notes);
 }
 
+$('.new-note-btn').addEventListener('click', () => {    
+    $('.new-note-container').classList.add('new-note-container-show');
+    $('.new-note-container .input-title').value="";
+    $('.new-note-container .nt-area').value="";
+});    
 
 const getAllNotes = () => {
     $$('.notes-container .notes').forEach(item => item.remove());
