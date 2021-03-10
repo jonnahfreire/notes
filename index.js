@@ -33,7 +33,6 @@ const saveNote = () => {
     let text  = $('.new-note-container .nt-area').value || "";
     let color = $('.new-note-container .c-palette').value;
     color = color === '#000000' ? '#288a0b;': color;
-    console.log(color);
 
     isEditting && notes.unshift({
         "cardcolor": color === '#000000' ? currentEditColor: color,
