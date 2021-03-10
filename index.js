@@ -9,19 +9,22 @@ var isEditting = false;
 var excludeTarget = 0;
 var currentEditColor = '';
 
-const setNewNote = () => localStorage.setItem('notes', JSON.stringify(notes));
+const setNewNote = (nt) => {
+    localStorage.setItem('notes', JSON.stringify(nt));
+    getAllNotes();
+};
 
 const time = () => {
     const months = ['Jan','Fev','Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
     let date = new Date();
     let day = date.getDate();
     let month = date.getMonth();
-    let hours = date.getHours()
+    let hours = date.getHours();
     let minutes = date.getMinutes();
 
     hours = hours.toString().length === 1 ? `0${hours}`: hours;
     minutes = minutes.toString().length == 1 ? `0${minutes}`: minutes;
-    date = `${day} ${months[month]} ${hours}:${minutes}`
+    date = `${day} ${months[month]} ${hours}:${minutes}`;
     return date;
 }
 
@@ -29,15 +32,16 @@ const saveNote = () => {
     let title = $('.new-note-container .input-title').value || "Sem título";
     let text  = $('.new-note-container .nt-area').value || "";
     let color = $('.new-note-container .c-palette').value;
-    color = color === '#000000' ? 'rgb(40, 138, 11);': color;
-    
+    color = color === '#000000' ? '#288a0b;': color;
+    console.log(color);
+
     isEditting && notes.unshift({
         "cardcolor": color === '#000000' ? currentEditColor: color,
         "date": time(),
         "title": title,
         "note": text
     });
-    
+
     !isEditting && notes.unshift({
         "cardcolor": color,
         "date": time(),
@@ -46,40 +50,38 @@ const saveNote = () => {
     });
 
     $('.new-note-container').classList.remove('new-note-container-show');
-
-    setNewNote();
-    getAllNotes();
+    setNewNote(notes);
 }
 
 $('.close-confirmation .close-conf-btn #y')
-    .addEventListener('click', ()=> {
-        closeModalConf = true;
-        $('.close-confirmation-modal').classList.remove('show-close-conf-modal');
-
-        if(!isEditting) saveNote();
-        else saveEdited();
+.addEventListener('click', ()=> {
+    closeModalConf = true;
+    $('.close-confirmation-modal').classList.remove('show-close-conf-modal');
+    
+    if(!isEditting) saveNote();
+    else saveEdited();
 })
 
 $('.close-confirmation .close-conf-btn #n')
-    .addEventListener('click', ()=> {
-        closeModalConf = false;
-        $('.close-confirmation-modal').classList.remove('show-close-conf-modal');
-
-        if(!isEditting) $('.new-note-container').classList.remove('new-note-container-show');
-        else $('.edit-note-container').classList.remove('edit-note-container-show');
+.addEventListener('click', ()=> {
+    closeModalConf = false;
+    $('.close-confirmation-modal').classList.remove('show-close-conf-modal');
+    
+    if(!isEditting) $('.new-note-container').classList.remove('new-note-container-show');
+    else $('.edit-note-container').classList.remove('edit-note-container-show');
 })
 
 $('.exclude-confirmation .exclude-conf-btn #exclude')
-    .addEventListener('click', ()=> {
-        excludeModal = true;
-        deleteNote(excludeTarget)
-        $('.exclude-confirmation-modal').classList.remove('show-exclude-conf-modal');
+.addEventListener('click', ()=> {
+    excludeModal = true;
+    deleteNote(excludeTarget)
+    $('.exclude-confirmation-modal').classList.remove('show-exclude-conf-modal');
 })
 
 $('.exclude-confirmation .exclude-conf-btn #donot-exclude')
-    .addEventListener('click', ()=> {
-        excludeModal = false;
-        $('.exclude-confirmation-modal').classList.remove('show-exclude-conf-modal');
+.addEventListener('click', ()=> {
+    excludeModal = false;
+    $('.exclude-confirmation-modal').classList.remove('show-exclude-conf-modal');
 })
 
 $('.new-note-container .close')
@@ -102,8 +104,15 @@ $('.new-note-btn').addEventListener('click', () => {
 
 
 $('.new-note-container .fa-save')
-    .addEventListener('click', () => {
-        saveNote();
+.addEventListener('click', () => {
+    t = $('.new-note-container .input-title').value;
+    n = $('.new-note-container .nt-area').value;
+    if(!t || t === "" || t === " "
+    && !n || n === "" || n === " "){
+        $('.new-note-container').classList.remove('new-note-container-show');
+        return;
+    }
+    saveNote();
 });
 
 let tempNote = {};
@@ -117,7 +126,7 @@ $('.edit-note-container .close-edit')
             $('.close-confirmation-modal').classList.add('show-close-conf-modal')
             return;
         }
-        $('.edit-note-container').classList.remove('edit-note-container-show');     
+        $('.edit-note-container').classList.remove('edit-note-container-show');
 });
 
 
@@ -144,14 +153,8 @@ const setCardColor = (index, color) => {
         "title": note.title,
         "note": note.note
     };
-    setNewNote();
-    getAllNotes();
+    setNewNote(notes);
 }
-
-
-$('.edit-note-container .fa-save')
-    .addEventListener('click', () => saveEdited());
-
 
 const saveEdited = () => {
     const title  = $('.edit-note-container .input-title').value || "Sem título";
@@ -163,18 +166,21 @@ const saveEdited = () => {
     notes.splice(currentNoteIid, 1)
     notes.unshift({ "cardcolor": newColor, "date": time(), "title": title, "note": text });
 
-    setNewNote();
     $('.edit-note-container').classList.remove('edit-note-container-show');
-    getAllNotes();
+    setNewNote(notes);
 }
+
+
+$('.edit-note-container .fa-save')
+    .addEventListener('click', () => saveEdited());
+
 
 const deleteNote = (target) => {
     notes.splice(target, 1);
-    setNewNote();
-
     notes.length === 0 && $('.msg').classList.remove('hide-msg');
-    getAllNotes();
+    setNewNote(notes);
 }
+
 
 const getAllNotes = () => {
     $$('.notes-container .notes').forEach(item => item.remove());
@@ -204,13 +210,13 @@ const getAllNotes = () => {
         });
 
         noteClone.querySelector('.palette')
-        .addEventListener('input', ()=> {
-            let color = noteClone.querySelector('.palette').value;
+        .addEventListener('input', (e)=> {
+            let color = e.target.value;
             setCardColor(index, color);
         });
         
         $('.notes-container').appendChild(noteClone);   
-    })
+    });
     
     $$('.notes-container .notes').length > 0 && $('.msg').classList.add('hide-msg');
 }
