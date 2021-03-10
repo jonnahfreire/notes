@@ -224,6 +224,7 @@ input::placeholder {
     outline: none;
     font-size: 18px;
     color: #fff;
+    padding: 5px;
     background-color: rgb(78, 74, 78);
 }
 
@@ -576,12 +577,13 @@ textarea::placeholder {
     }
     
     .note-area textarea, .note-area-edit textarea {
-        width: 100%;
+        width: 97%;
         height: 100%;
         resize: none;
         border: none;
         outline: none;
         font-size: 18px;
+        padding: 5px;
         color: #fff;
         background-color: rgb(78, 74, 78);
     }
@@ -890,7 +892,7 @@ textarea::placeholder {
     }
     
     .note-area textarea, .note-area-edit textarea {
-        width: 100%;
+        width: 96%;
         height: 100%;
         resize: none;
         border: none;
@@ -997,7 +999,7 @@ textarea::placeholder {
     }
     
     .note-area textarea, .note-area-edit textarea {
-        width: inherit;
+        width: 96%;
         height: 100%;
         resize: none;
         border: none;
