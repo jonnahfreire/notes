@@ -191,8 +191,11 @@ const getAllNotes = () => {
     notes.forEach((note, index) => {
         const noteClone = $('.notes').cloneNode(true);
         
+        let title = note.title;
+        title = title.length >= 20 ? title.substring(0, 17)+'..': title;
+        
         noteClone.style.backgroundColor = note.cardcolor;
-        noteClone.querySelector('.notes-title-text').textContent = note.title;
+        noteClone.querySelector('.notes-title-text').textContent = title;
         noteClone.querySelector('.notes-text').textContent = note.note;
         noteClone.querySelector('.edited span').textContent = note.date;
         
