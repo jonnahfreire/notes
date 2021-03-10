@@ -16,6 +16,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    transition: 0.9s all;
 }
 
 .title {
@@ -88,6 +89,8 @@ body {
     font-weight: 600;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     -webkit-user-select: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .notes-preview {
@@ -174,7 +177,7 @@ body {
 
 .create-new, .edit-note {
     width: inherit;
-    height: inherit;
+    height: 100%;
     background-color: rgb(82, 74, 82);
     border-radius: 10px;
 }
@@ -258,6 +261,11 @@ textarea::placeholder {
     cursor: pointer;
 }
 
+.d {
+    color: rgb(40, 138, 11);
+    background-color: #288a0b;
+     background-color: #3735bb;
+}
 .close, .close-edit {
     transition: .2s linear;
     position: relative;
@@ -429,12 +437,68 @@ textarea::placeholder {
     user-select: none;
 }
 
+.alert-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: none;
+}
+
+.show-alert {
+    display: flex;
+}
+
+.alert {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #ffffff;
+    font-size: 1rem;
+    text-align: center;
+    -webkit-user-select: none;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 5px 5px 5px;
+    border: none;
+    border-radius: 2px;
+    width: 255px;
+    height: 80px;
+    box-shadow: 0 0 4px #FFF;
+    background-color: rgb(102, 99, 99);
+    margin-top: 20%;
+}
+
+.alert button {
+    width: 45px;
+    height: 35px;
+    border: none;
+    color: #FFF;
+    font-weight: 600;
+    align-self: flex-end;
+    background-color: rgb(102, 99, 99);
+    margin-top: 20px;
+    cursor: pointer;
+    outline: none;
+}
+
+
 @media screen and (max-width: 500px){
     .container { 
         width: 100%;
         height: 100vh;
         align-items: center;
         justify-content: flex-start;
+    }
+
+    .alert {
+        font-size: 1.2rem;
+        width: 85%;
+        margin-top: -15%;
+    }
+
+    .alert button {
+        font-size: 1.1rem;
     }
 
     .title p {
@@ -494,10 +558,21 @@ textarea::placeholder {
         overflow: hidden;
         text-overflow: ellipsis;
     }  
-    
+
+    .create-new,
+    .edit-note {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(82, 74, 82);
+        border-radius: 10px;
+    }
+
     .note-area, .note-area-edit {
         width: 100%;
-        height: 75%;
+        height: 100%;
+        flex: 5;
     }
     
     .note-area textarea, .note-area-edit textarea {
@@ -517,13 +592,6 @@ textarea::placeholder {
         font-size: 16px;
     }
 
-    .create-new,
-    .edit-note {
-        width: 100%;
-        height: 90%;
-        background-color: rgb(82, 74, 82);
-        border-radius: 10px;
-    }
 
     .save, .save-edit {
         margin-left: 10px;
@@ -568,11 +636,12 @@ textarea::placeholder {
     .new-note-container, .edit-note-container {
         background: transparent;
         width: 95%;
-        height: 80%;
+        height: 75%;
         display: flex;
         justify-content: center;
         position: absolute;
         top: 70px;
+        margin: 0;
         display: none;
     }
     
@@ -719,6 +788,14 @@ textarea::placeholder {
         margin-top: -8px;
     }
 
+    .note-area-mobile-adapter {
+        height: 65%;
+    }
+
+    .create-new-btns, .edit-btns {
+        flex:1;
+    }
+    
     .create-new-btns label .fa-palette,
     .edit-btns label .fa-palette {
         background-color: #a746f7;
@@ -741,6 +818,14 @@ textarea::placeholder {
 }
 
 @media screen and (width: 360px){
+    .alert {
+        font-size: 1rem;
+    }
+
+    .alert button {
+        font-size: 1rem;
+    }
+    
     .close-confirmation {
         background-color: rgb(114, 114, 114);
         padding: 10px;
@@ -801,6 +886,7 @@ textarea::placeholder {
     .note-area, .note-area-edit {
         width: 100%;
         height: 78%;
+        flex: 5;
     }
     
     .note-area textarea, .note-area-edit textarea {
@@ -844,6 +930,14 @@ textarea::placeholder {
 }
 
 @media screen and (width: 320px){
+    .alert {
+        font-size: 1rem;
+    }
+
+    .alert button {
+        font-size: 1rem;
+    }
+
     .close, .close-edit {
         position: relative;
         background-color:  rgb(107, 107, 107);
@@ -899,6 +993,7 @@ textarea::placeholder {
     .note-area, .note-area-edit {
         width: 100%;
         height: 75%;
+        flex: 5;
     }
     
     .note-area textarea, .note-area-edit textarea {
