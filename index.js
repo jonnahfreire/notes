@@ -217,9 +217,11 @@ const getAllNotes = () => {
                 editNote(index);
             });
 
-        noteClone.querySelector('.notes-preview')
-        .addEventListener('dblclick', () => {
-            editNote(index);
+         ['.notes-preview', '.notes-title'].forEach(item => {
+            noteClone.querySelector(item)
+            .addEventListener('dblclick', () => {
+                editNote(index);
+            });
         });
 
         noteClone.querySelector('.palette')
