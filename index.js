@@ -219,7 +219,7 @@ const getAllNotes = () => {
 
          ['.notes-preview', '.notes-title'].forEach(item => {
             noteClone.querySelector(item)
-            .addEventListener('dblclick', () => {
+            .addEventListener('click', () => {
                 editNote(index);
             });
         });
